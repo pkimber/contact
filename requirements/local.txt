@@ -1,0 +1,18 @@
+-r base.txt
+-e .
+-e ../base
+-e ../finance
+-e ../invoice
+-e ../login
+-e ../mail
+-e ../search
+beautifulsoup4
+devpi-client
+factory-boy
+gitpython
+hgapi
+ipdb
+psycopg2
+pytest-django
+pyyaml
+walkdir

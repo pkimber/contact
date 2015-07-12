@@ -1,0 +1,4 @@
+{{ object.pk }}
+{{ object.name }}
+{{ object.address }}
+{{ object.url }}

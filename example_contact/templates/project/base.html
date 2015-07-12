@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+  Contact
+{% endblock title %}
+
+{% block heading %}
+  Contact
+{% endblock heading %}
+
+{% block sub_heading %}
+  Example App
+{% endblock sub_heading %}
+
+{% block menu %}
+  <li>
+    <a href="{% url "admin:index" %}">Admin</a>
+  </li>
+  {{ block.super }}
+{% endblock menu %}
+
+{% block footer %}
+{% endblock footer %}
