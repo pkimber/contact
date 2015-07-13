@@ -15,12 +15,15 @@ class ContactFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Contact
 
-    hourly_rate = Decimal('20.00')
     user = factory.SubFactory(UserFactory)
 
     @factory.sequence
-    def slug(n):
-        return 'contact_{:02d}'.format(n)
+    def address_1(n):
+        return 'address_1_{:02d}'.format(n)
+
+    @factory.sequence
+    def company_name(n):
+        return 'company_{:02d}'.format(n)
 
 
 class UserContactFactory(factory.django.DjangoModelFactory):

@@ -39,7 +39,8 @@ class TestView(PermTestCase):
         UserContactFactory(user=web)
         user_contact = UserContactFactory()
         url = reverse(
-            'contact.detail', kwargs={'slug': user_contact.contact.slug}
+            'contact.detail',
+            kwargs={'slug': user_contact.contact.user.username}
         )
         self.assert_staff_only(url)
 
@@ -50,6 +51,7 @@ class TestView(PermTestCase):
     def test_contact_update(self):
         user_contact = UserContactFactory()
         url = reverse(
-            'contact.update', kwargs={'slug': user_contact.contact.slug}
+            'contact.update',
+            kwargs={'slug': user_contact.contact.user.username}
         )
         self.assert_staff_only(url)

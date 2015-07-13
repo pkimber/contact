@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
-# TODO PJK Is this the correct import for 'RelatedObjectDoesNotExist'
-# from django.db.models.fields.related import RelatedObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
@@ -67,6 +65,7 @@ class ContactDetailView(
         LoginRequiredMixin, CheckPermMixin, BaseMixin, DetailView):
 
     model = Contact
+    slug_field = 'user__username'
 
     def get_object(self, *args, **kwargs):
         obj = super(ContactDetailView, self).get_object(*args, **kwargs)
@@ -87,3 +86,4 @@ class ContactUpdateView(
 
     form_class = ContactForm
     model = Contact
+    slug_field = 'user__username'

@@ -33,39 +33,33 @@ def default_scenario_contact():
     staff = get_user_staff()
     farm = Contact.objects.create_contact(
         fred,
-        'farm',
-        "Fred's Farm",
-        hourly_rate=Decimal('6.50'),
+        company_name="Fred's Farm",
     )
     UserContact.objects.create_user_contact(fred, farm)
     # sara has a smallholding
     sara = get_user_sara()
     smallholding = Contact.objects.create_contact(
         sara,
-        'smallholding',
-        "Sara's Smallholding",
-        hourly_rate=Decimal('10.00'),
+        company_name="Sara's Smallholding",
     )
     UserContact.objects.create_user_contact(sara, smallholding)
     merchant = Contact.objects.create_contact(
         mike,
-        'merchant',
-        "Mike's Agricultural Merchants",
-        hourly_rate=Decimal('43.21'),
+        company_name="Mike's Agricultural Merchants",
     )
     UserContact.objects.create_user_contact(mike, merchant)
 
 
 def get_contact_farm():
-    return Contact.objects.get(slug='farm')
+    return Contact.objects.get(user=get_user_fred())
 
 
 def get_contact_merchant():
-    return Contact.objects.get(slug='merchant')
+    return Contact.objects.get(user=get_user_mike())
 
 
 def get_contact_smallholding():
-    return Contact.objects.get(slug='smallholding')
+    return Contact.objects.get(user=get_user_sara())
 
 
 def get_note_fence_forgot():

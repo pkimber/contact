@@ -3,7 +3,6 @@ from django.contrib import admin
 
 from .models import (
     Contact,
-    Industry,
     UserContact,
 )
 
@@ -12,12 +11,6 @@ class ContactAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(Contact, ContactAdmin)
-
-
-class IndustryAdmin(admin.ModelAdmin):
-    pass
-
-admin.site.register(Industry, IndustryAdmin)
 
 
 class UserContactAdmin(admin.ModelAdmin):

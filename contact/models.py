@@ -21,30 +21,10 @@ class ContactError(Exception):
         return repr('{}, {}'.format(self.__class__.__name__, self.value))
 
 
-class Industry(models.Model):
-
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Industry'
-        verbose_name_plural = 'Industries'
-
-    def __str__(self):
-        return '{}'.format(self.name)
-
-reversion.register(Industry)
-
-
 class ContactManager(models.Manager):
 
-    def create_contact(self, user, slug, name, **kwargs):
-        obj = self.model(
-            user=user,
-            slug=slug,
-            name=name,
-            **kwargs
-        )
+    def create_contact(self, user, **kwargs):
+        obj = self.model(user=user, **kwargs)
         obj.save()
         return obj
 
@@ -52,25 +32,34 @@ class ContactManager(models.Manager):
 class Contact(TimeStampedModel):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    name = models.CharField(max_length=100)
-    address = models.TextField(blank=True)
-    slug = models.SlugField(unique=True)
-    url = models.URLField(blank=True, null=True)
-    phone = models.CharField(max_length=100, blank=True)
-    mail = models.EmailField(blank=True)
-    industry = models.ForeignKey(Industry, blank=True, null=True)
-    hourly_rate = models.DecimalField(
-        blank=True, null=True, max_digits=8, decimal_places=2
-    )
+    # address
+    company_name = models.CharField(max_length=100, blank=True)
+    address_1 = models.CharField('Address', max_length=100, blank=True)
+    address_2 = models.CharField('', max_length=100, blank=True)
+    address_3 = models.CharField('', max_length=100, blank=True)
+    town = models.CharField(max_length=100, blank=True)
+    county = models.CharField(max_length=100, blank=True)
+    postcode = models.CharField(max_length=20, blank=True)
+    country = models.CharField(max_length=100, blank=True)
+    # contact
+    phone = models.CharField(max_length=50, blank=True)
+    mobile = models.CharField(max_length=50, blank=True)
+    website = models.URLField(blank=True)
+    # personal
+    dob = models.DateField(blank=True, null=True)
+    nationality = models.CharField(max_length=50, blank=True)
+    position = models.CharField(max_length=50, blank=True)
+    # internal
+    deleted = models.BooleanField(default=False)
     objects = ContactManager()
 
     class Meta:
-        ordering = ('slug',)
+        ordering = ('user__username',)
         verbose_name = 'Contact'
         verbose_name_plural = 'Contacts'
 
     def __str__(self):
-        return '{}'.format(self.name)
+        return '{}'.format(self.user.get_full_name())
 
     @property
     def deleted(self):
@@ -78,12 +67,12 @@ class Contact(TimeStampedModel):
         return False
 
     def get_absolute_url(self):
-        return reverse('contact.detail', args=[self.slug])
+        return reverse('contact.detail', args=[self.user.username])
 
     def get_summary_description(self):
         return filter(None, (
-            self.name,
-            self.address,
+            self.user.get_full_name(),
+            self.company_name,
         ))
 
 reversion.register(Contact)
