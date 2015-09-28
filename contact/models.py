@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from datetime import date
+from decimal import Decimal
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -60,6 +61,45 @@ class Contact(TimeStampedModel):
 
     def __str__(self):
         return '{}'.format(self.user.get_full_name())
+
+    @property
+    def checkout_can_charge(self):
+        return True
+
+    @property
+    def checkout_description(self):
+        return self.get_summary_description()
+
+    @property
+    def checkout_actions(self):
+        return []
+
+    @property
+    def checkout_email(self):
+        return self.user.email
+
+    def checkout_fail(self, *args, **kwargs):
+        pass
+
+    def checkout_fail_url(self, checkout_pk):
+        pass
+
+    #def checkout_mail(self, checkout_action):
+    #    pass
+
+    @property
+    def checkout_name(self):
+        return '{}'.format(self.user.get_full_name())
+
+    def checkout_success(self, checkout_action):
+        pass
+
+    def checkout_success_url(self, checkout_pk):
+        pass
+
+    @property
+    def checkout_total(self):
+        return Decimal()
 
     @property
     def deleted(self):
