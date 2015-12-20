@@ -3,6 +3,19 @@ contact
 
 Django application
 
+To Do
+=====
+
+- I think I should remove the ``hourly_rate`` field from the ``Contact`` model.
+  It probably belongs in the ``crm`` or ``invoice`` app.
+- Do we want a ``slug`` field in the ``Contact`` model.  I think we probably
+  do.
+- Need to think about how to link users to the contact model.  The contact
+  *is a* user.  The ``UserContact`` field links one or more users to a contact.
+  Need to write some tests for this.  The original system only allowed a user
+  to be linked to one contact.  I think this should be changed to allow a user
+  to be linked to any number of contacts.
+
 Install
 =======
 
