@@ -1,18 +1,15 @@
 -r base.txt
 -e .
 -e ../base
--e ../finance
--e ../invoice
 -e ../login
 -e ../mail
 -e ../search
-beautifulsoup4
 devpi-client
 factory-boy
-gitpython
-hgapi
-ipdb
 psycopg2
+pytest-cov
 pytest-django
-pyyaml
-walkdir
+pytest-flakes
+pytest-pep8
+pytest-sugar
+pytest-watch

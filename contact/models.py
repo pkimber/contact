@@ -2,12 +2,13 @@
 from datetime import date
 from decimal import Decimal
 
+import reversion
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
-
-import reversion
+from django_extensions.db.fields import AutoSlugField
 
 from base.model_utils import TimeStampedModel
 
@@ -33,6 +34,12 @@ class ContactManager(models.Manager):
 class Contact(TimeStampedModel):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    slug = AutoSlugField(
+        'slug',
+        max_length=100,
+        unique=True,
+        populate_from=('generate_slug',),
+    )
     # address
     company_name = models.CharField(max_length=100, blank=True)
     address_1 = models.CharField('Address', max_length=100, blank=True)
@@ -50,6 +57,10 @@ class Contact(TimeStampedModel):
     dob = models.DateField(blank=True, null=True)
     nationality = models.CharField(max_length=50, blank=True)
     position = models.CharField(max_length=50, blank=True)
+    # accounts
+    hourly_rate = models.DecimalField(
+        blank=True, null=True, max_digits=8, decimal_places=2
+    )
     # internal
     deleted = models.BooleanField(default=False)
     objects = ContactManager()
@@ -106,6 +117,14 @@ class Contact(TimeStampedModel):
         """No actual delete (yet), so just return 'False'."""
         return False
 
+    @property
+    def full_name(self):
+        return '{}'.format(self.user.get_full_name())
+
+    @property
+    def generate_slug(self):
+        return self.company_name if self.company_name else self.full_name
+
     def get_absolute_url(self):
         return reverse('contact.detail', args=[self.user.username])
 
@@ -130,10 +149,7 @@ class UserContactManager(models.Manager):
 
 
 class UserContact(TimeStampedModel):
-    """
-    A user is linked to a single contact.
-    More than one user can link to the same contact, but a user cannot
-    link to more than one contact.
+    """A user is linked to a contact.
 
     e.g.
     Andy - ConnexionSW
