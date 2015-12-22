@@ -34,12 +34,13 @@ class ContactManager(models.Manager):
 class Contact(TimeStampedModel):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    slug = AutoSlugField(
-        'slug',
-        max_length=100,
-        unique=True,
-        populate_from=('generate_slug',),
-    )
+    slug = models.SlugField(unique=True)
+    # slug = AutoSlugField(
+    #     'slug',
+    #     max_length=100,
+    #     unique=True,
+    #     populate_from=('generate_slug',),
+    # )
     # address
     company_name = models.CharField(max_length=100, blank=True)
     address_1 = models.CharField('Address', max_length=100, blank=True)
@@ -121,9 +122,9 @@ class Contact(TimeStampedModel):
     def full_name(self):
         return '{}'.format(self.user.get_full_name())
 
-    @property
-    def generate_slug(self):
-        return self.company_name if self.company_name else self.full_name
+    # @property
+    # def generate_slug(self):
+    #     return self.company_name if self.company_name else self.full_name
 
     def get_absolute_url(self):
         return reverse('contact.detail', args=[self.user.username])

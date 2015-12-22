@@ -15,6 +15,8 @@ To Do
   Need to write some tests for this.  The original system only allowed a user
   to be linked to one contact.  I think this should be changed to allow a user
   to be linked to any number of contacts.
+- The migration is currently losing the ``industry`` field.  See
+  ``0006_auto_20151220_2207.py`` for the commented out field.
 
 Install
 =======

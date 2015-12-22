@@ -34,6 +34,7 @@ def default_scenario_contact():
     farm = Contact.objects.create_contact(
         fred,
         company_name="Fred's Farm",
+        slug='fred',
     )
     UserContact.objects.create_user_contact(fred, farm)
     # sara has a smallholding
@@ -41,11 +42,13 @@ def default_scenario_contact():
     smallholding = Contact.objects.create_contact(
         sara,
         company_name="Sara's Smallholding",
+        slug='sara',
     )
     UserContact.objects.create_user_contact(sara, smallholding)
     merchant = Contact.objects.create_contact(
         mike,
         company_name="Mike's Agricultural Merchants",
+        slug='mike',
     )
     UserContact.objects.create_user_contact(mike, merchant)
 

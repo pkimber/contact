@@ -1,0 +1,13 @@
+-r base.txt
+-e .
+-e git+https://github.com/pkimber/base.git#egg=base
+-e git+https://github.com/pkimber/login.git#egg=login
+-e git+https://github.com/pkimber/mail.git#egg=mail
+django_extensions
+factory-boy
+psycopg2
+pytest-cov
+pytest-django
+pytest-flakes
+pytest-mock
+pytest-pep8

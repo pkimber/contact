@@ -1,0 +1,18 @@
+test:
+  script:
+  # this configures django application to use attached postgres database that is run on `postgres` host
+  - export DATABASE_URL=postgres://postgres:@postgres:5432/intranet
+  # - export MAILGUN_SERVER_NAME=test.net
+  # - export STRIPE_PUBLISH_KEY="pk_test"
+  # - export STRIPE_SECRET_KEY="sk_test"
+  # make sure universe is available
+  # - echo "deb http://archive.ubuntu.com/ubuntu trusty universe" >> /etc/apt/sources.list
+  # - apt-get update -qy
+  # - apt-get install -y python3.4-dev python-pip python-virtualenv git
+  # # mercurial postgresql-server-dev-9.3 libjpeg-dev libjpeg-turbo8-dev libjpeg8-dev libxml2-dev libxslt1-dev
+  # - virtualenv -p /usr/bin/python3.4 venv
+  # - source venv/bin/activate
+  # - pip install -U pip setuptools
+  - pip3 install -r requirements/ci.txt -i https://devpi.kbsoftware.co.uk/kb/dev/+simple/
+  # - cp ci_environ.py environ.py
+  - py.test --create-db --cov
